@@ -1,0 +1,36 @@
+{% extends "base.j2" %}
+
+{% block content %}
+    <h2>{{ team }}</h2>
+    {% if replays is not none %}
+        <table>
+            <td>Dire</td><td>Radiant</td>
+            {% for r_pair in replays %}
+                {% set left = '' if r_pair[0] is none else r_pair[0] %}
+                {% set right = '' if r_pair[1] is none else r_pair[1] %}
+                <tr>
+                <td align='right'>{{left}}</td>
+                <td align='right'>{{right}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <h2>Dire</h2>
+    {% with side=dire_dict %}
+        {% include "plots/draft.j2" %}
+        {% include "plots/warding.j2" %}
+        {% include "plots/positioning.j2" %}
+        {% include "plots/smoke.j2" %}
+        {% include "plots/scan.j2" %}
+    {% endwith %}
+    <h2>Radiant</h2>
+    {% with side=radiant_dict %}
+        {% include "plots/draft.j2" %}
+        {% include "plots/warding.j2" %}
+        {% include "plots/positioning.j2" %}
+        {% include "plots/smoke.j2" %}
+        {% include "plots/scan.j2" %}
+    {% endwith %}
+    <h2>Summary</h2>
+    {% include "plots/summary.j2" %}
+{% endblock content %}
