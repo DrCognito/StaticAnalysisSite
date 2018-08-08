@@ -32,5 +32,7 @@
         {% include "plots/scan.j2" %}
     {% endwith %}
     <h2>Summary</h2>
-    {% include "plots/summary.j2" %}
+    {% with summary=summary %}
+        {% include "plots/summary.j2" %}
+    {% endwith %}
 {% endblock content %}
