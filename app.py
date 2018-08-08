@@ -11,6 +11,7 @@ from flask_frozen import Freezer
 
 load_dotenv(dotenv_path="setup.env")
 app = Flask(__name__)
+app.config.from_pyfile('config.py')
 freezer = Freezer(app)
 
 
