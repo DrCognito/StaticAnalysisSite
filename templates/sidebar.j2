@@ -1,0 +1,15 @@
+<!-- Side navigation -->
+<div class="sidenav">
+  {% for nav in navigators %}
+    {% if nav[1] is none %}
+        {% if nav[0] is none %}
+            <hr>
+        {% else %}
+            <hr>
+            <p>{{nav[0]}}</p>
+        {% endif %}
+    {% else %}
+        <a href={{nav[1]}}>{{nav[0]}}</a>
+    {% endif %}
+  {% endfor %}
+</div>

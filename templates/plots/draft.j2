@@ -1,5 +1,7 @@
-<a name={{side["draft_link"]}}>
+{% extends "team.j2" %}
+{% block vis %}
 <h2>Drafts</h2>
-{% if side["plot_drafts"] is not none %}
-    <img src={{side["plot_drafts"]}}>
+{% if plots["plot_drafts"] is not none %}
+    <img class='img-fit' src={{plots["plot_drafts"]}}>
 {% endif %}
+{% endblock vis %}

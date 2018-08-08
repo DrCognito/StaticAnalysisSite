@@ -1,5 +1,8 @@
-<a name={{side["scan_link"]}}>
-<h3>Scan</h3>
-{% if side["scan"] is not none %}
-    <img src={{side["scan"]}}>
+{% extends "team.j2" %}
+
+{% block vis %}
+<h2>Scan</h2>
+{% if plots["scan"] is not none %}
+    <img src={{plots["scan"]}}>
 {% endif %}
+{% endblock vis %}

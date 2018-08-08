@@ -1,8 +1,10 @@
-{% if side['ward_plots'] is not none %}
-<h3>Wards</h3><br>
-    {% for plot in side['ward_plots'] %}
-        <a name = {{side['ward_links'][loop.index - 1]}}
-        <h3>{{side['ward_title'][loop.index - 1]}}</h3><br>
+{% extends "team.j2" %}
+{% block vis %}
+{% if plots['ward_plots'] is not none %}
+<h2>Wards</h2><br>
+    {% for plot in plots['ward_plots'] %}
+        <h2>{{plots['ward_title'][loop.index - 1]}}</h2><br>
         <img src={{url_for('static', filename=plot)}}><br>
     {% endfor %}
 {% endif %}
+{% endblock vis %}

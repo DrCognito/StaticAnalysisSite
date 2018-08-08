@@ -1,5 +1,7 @@
-<a name={{side["smoke_link"]}}>
-<h3>Smoke</h3>
-{% if side["smoke"] is not none %}
-    <img src={{side["smoke"]}}>
+{% extends "team.j2" %}
+{% block vis %}
+<h2>Smoke</h2>
+{% if plots["smoke"] is not none %}
+    <img src={{plots["smoke"]}}>
 {% endif %}
+{% endblock vis %}

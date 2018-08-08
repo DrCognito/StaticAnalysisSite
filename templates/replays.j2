@@ -1,0 +1,17 @@
+{% extends "team.j2" %}
+{% block vis %}
+<h2>Replays</h2>
+{% if replays is not none %}
+    <table>
+        <td>Dire</td><td>Radiant</td>
+        {% for r_pair in replays %}
+            {% set left = '' if r_pair[0] is none else r_pair[0] %}
+            {% set right = '' if r_pair[1] is none else r_pair[1] %}
+            <tr>
+            <td align='right'>{{left}}</td>
+            <td align='right'>{{right}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock vis %}
