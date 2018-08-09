@@ -8,6 +8,7 @@ from urllib.parse import unquote
 from dotenv import load_dotenv
 from flask import Flask, abort, render_template, url_for
 from flask_frozen import Freezer
+from config import PROJECT_ROOT
 
 load_dotenv(dotenv_path="setup.env")
 app = Flask(__name__)
@@ -196,7 +197,7 @@ def summary(team):
                            team=team)
 
 
-@app.route("/<string:team>/<string:side>/<string:plot>")
+@app.route("/<string:team>/<string:side>/<string:plot>.html")
 def serve_plots(team, side, plot):
     team = unquote(team)
     if team not in metadata_dict:
@@ -212,5 +213,7 @@ def team():
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'build':
+        print("Exporting to {}".format(PROJECT_ROOT))
         freezer.freeze()
+        print("Exporting to {}".format(PROJECT_ROOT))
     app.run(port=8000)
