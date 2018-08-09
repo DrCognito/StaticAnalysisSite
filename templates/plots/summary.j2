@@ -2,22 +2,22 @@
 {% block vis %}
 {% if summary["draft_summary"] is not none %}
     <h2>Draft Summary<h2><br>
-    <img src={{summary["draft_summary"]}}><br>
+    <img class='img-fit' src={{summary["draft_summary"]}}><br>
 {% endif %}
 {% if summary["hero_picks"] is not none %}
     <h2>Hero Picks<h2><br>
-    <img src={{summary["hero_picks"]}}><br>
+    <img class='img-fit' src={{summary["hero_picks"]}}><br>
 {% endif %}
 {% if summary["pair_picks"] is not none %}
     <h2>Pair Pick Rate<h2><br>
-    <img src={{summary["pair_picks"]}}><br>
+    <img class='img-fit' src={{summary["pair_picks"]}}><br>
 {% endif %}
 {% if summary["pick_contexts"] is not none %}
     <h2>Top Pick Context<h2><br>
-    <img src={{summary["pick_context"]}}><br>
+    <img class='img-fit' src={{summary["pick_context"]}}><br>
 {% endif %}
 {% if summary["win_rate"] is not none %}
     <h2>Win Rates<h2><br>
-    <img src={{summary["win_rate"]}}><br>
+    <img class='img-fit' src={{summary["win_rate"]}}><br>
 {% endif %}
 {% endblock vis %}
