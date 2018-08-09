@@ -15,7 +15,7 @@ def parent_dir(path):
     return os.path.abspath(os.path.join(path, os.pardir))
 
 
-PROJECT_ROOT = parent_dir(APP_DIR)
+PROJECT_ROOT = APP_DIR
 # In order to deploy to Github pages, you must build the static files to
 # the project root
 FREEZER_DESTINATION = PROJECT_ROOT
