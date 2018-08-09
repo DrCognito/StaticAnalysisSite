@@ -116,10 +116,9 @@ def render_plot_template(team, side, plot, dataset='default'):
                                    team=team)
 
         if plot == 'wards':
-            uniq_wards = set(data['plot_ward_{}'.format(side)])
             plots["ward_title"] = data['plot_ward_names']
             plots["ward_plots"] = ['plots/' + p.replace("\\", "/") for p in
-                                   uniq_wards]
+                                   data['plot_ward_{}'.format(side)]]
 
             return render_template('plots/warding.j2',
                                    plots=plots,
