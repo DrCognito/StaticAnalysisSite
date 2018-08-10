@@ -14,4 +14,8 @@
         {% endfor %}
     </table>
 {% endif %}
+{% if winrates is not none %}
+<h2>Win Rates</h2>
+{{winrates}}
+{% endif %}
 {% endblock vis %}

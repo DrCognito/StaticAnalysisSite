@@ -180,7 +180,8 @@ def team(team, dataset='default'):
         return render_template('replays.j2',
                                navigators=navigators,
                                replays=replay_list,
-                               team=team)
+                               team=team,
+                               winrates=data['stat_win_rate'])
 
 
 @app.route("/<string:team>/summary/")
