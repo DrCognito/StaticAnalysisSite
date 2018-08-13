@@ -87,6 +87,7 @@ def get_team_summary(team, dataset='default') -> dict:
         summary_dict['pair_picks'] = url_path(data["plot_pair_picks"])
         summary_dict['pick_context'] = url_path(data["plot_pick_context"])
         summary_dict['win_rate'] = url_path(data["plot_win_rate"])
+        summary_dict['rune'] = url_path(data["plot_rune_control"])
 
         return summary_dict
 
