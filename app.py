@@ -30,8 +30,9 @@ metadata_dict = get_metadata_locations(Path(environ['PLOT_DIRECTORY']))
 
 
 def url_path(path_in: str, endpoint='static'):
-    path_in = path_in.replace("\\", "/")
-    path_in = "plots/" + path_in
+    if path_in is not None:
+        path_in = path_in.replace("\\", "/")
+        path_in = "plots/" + path_in
     return url_for(endpoint, filename=path_in)
 
 
@@ -109,7 +110,8 @@ def render_plot_template(team, side, plot, dataset='default'):
         plots = {}
         if plot == 'draft':
             plots["drafts_link"] = "#{}_drafts".format(side)
-            plots["plot_drafts"] = url_path(data["plot_{}_drafts".format(side)])
+            if data["plot_{}_drafts".format(side)] is not None:
+                plots["plot_drafts"] = url_path(data["plot_{}_drafts".format(side)])
 
             return render_template('plots/draft.j2',
                                    plots=plots,
@@ -136,14 +138,16 @@ def render_plot_template(team, side, plot, dataset='default'):
                                    team=team)
 
         if plot == 'smoke':
-            plots["smoke"] = url_path(data["plot_smoke_{}".format(side)])
+            if data["plot_smoke_{}".format(side)] is not None:
+                plots["smoke"] = url_path(data["plot_smoke_{}".format(side)])
             return render_template('plots/smoke.j2',
                                    plots=plots,
                                    navigators=navigators,
                                    team=team)
 
         if plot == 'scan':
-            plots["scan"] = url_path(data["plot_scan_{}".format(side)])
+            if data["plot_scan_{}".format(side)] is not None:
+                plots["scan"] = url_path(data["plot_scan_{}".format(side)])
             return render_template('plots/scan.j2',
                                    plots=plots,
                                    navigators=navigators,
