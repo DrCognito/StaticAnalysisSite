@@ -72,6 +72,30 @@ def get_team_nav(team):
     return navigators
 
 
+def get_nav_report():
+    '''Produces navbar for reports with simple internal link.
+    '''
+    navigators = [(team, '#top')]
+    navigators += [("DIRE", '#dire')]
+    navigators += [("Drafts", '#dire_draft')]
+    navigators += [("Wards", '#dire_wards')]
+    navigators += [("Positioning", '#dire_pos')]
+    navigators += [("Smokes", '#dire_smoke')]
+    navigators += [("Scans", '#dire_scan')]
+
+    navigators += [("RADIANT", '#radiant')]
+    navigators += [("Drafts", '#radiant_draft')]
+    navigators += [("Wards", '#radiant_wards')]
+    navigators += [("Positioning", '#radiant_pos')]
+    navigators += [("Smokes", '#radiant_smoke')]
+    navigators += [("Scans", '#radiant_scan')]
+
+    navigators += [(None, None)]
+    navigators += [("Summary", '#summary')]
+
+    return navigators
+
+
 def get_team_summary(team, dataset='default') -> dict:
     '''Returns a dictionary of summary plots with url_for links'''
     with open(metadata_dict[team], 'r') as file:
@@ -210,10 +234,89 @@ def serve_plots(team, side, plot):
     return render_plot_template(team, side, plot)
 
 
+@app.route("/<string:team>/report/")
+def report(team, dataset='default'):
+    team = unquote(team)
+    if team not in metadata_dict:
+        abort(404)
+
+    navigators = get_nav_report()
+    dire = {}
+    radiant = {}
+    with open(metadata_dict[team], 'r') as file:
+        json_file = json_load(file)
+
+        if dataset not in json_file:
+            abort(404)
+        data = json_file[dataset]
+
+        # replays
+        dire_replays = data['replays_dire']
+        dire_replays.sort(reverse=True)
+        radiant_replays = data['replays_radiant']
+        radiant_replays.sort(reverse=True)
+        replay_list = list(zip_longest(dire_replays, radiant_replays))
+        # win rates
+        winrates = data['stat_win_rate']
+
+        # drafts
+        dire["drafts_link"] = "#dire_drafts"
+        if data["plot_dire_drafts"] is not None:
+            dire["plot_drafts"] = url_path(data["plot_dire_drafts"])
+        radiant["drafts_link"] = "#radiant_drafts"
+        if data["plot_radiant_drafts"] is not None:
+            radiant["plot_drafts"] = url_path(data["plot_radiant_drafts"])
+
+        # wards
+        dire["ward_title"] = data['plot_ward_names']
+        dire["ward_plots"] = ['plots/' + p.replace("\\", "/") for p in
+                              data['plot_ward_dire']]
+        radiant["ward_title"] = data['plot_ward_names']
+        radiant["ward_plots"] = ['plots/' + p.replace("\\", "/") for p in
+                                 data['plot_ward_radiant']]
+
+        # positioning
+        dire['pos_names'] = data['player_names']
+        dire['pos_plots'] = ['plots/' + p.replace("\\", "/") for p in
+                             data['plot_pos_dire']]
+        radiant['pos_names'] = data['player_names']
+        radiant['pos_plots'] = ['plots/' + p.replace("\\", "/") for p in
+                                data['plot_pos_radiant']]
+
+        # smoke
+        if data["plot_smoke_dire"] is not None:
+            dire["smoke"] = url_path(data["plot_smoke_dire"])
+        if data["plot_smoke_radiant"] is not None:
+            radiant["smoke"] = url_path(data["plot_smoke_radiant"])
+
+        # scans
+        if data["plot_scan_dire"] is not None:
+            dire["scan"] = url_path(data["plot_scan_dire"])
+        if data["plot_scan_radiant"] is not None:
+            radiant["scan"] = url_path(data["plot_scan_radiant"])
+
+    summary = get_team_summary(team)
+    print(summary)
+
+    return render_template('plots/report.j2',
+                           navigators=navigators,
+                           replays=replay_list,
+                           winrates=winrates,
+                           dire=dire,
+                           radiant=radiant,
+                           summary=summary,
+                           team=team)
+
 @freezer.register_generator
 def team():
     for p in metadata_dict.keys():
         yield {'team': p}
+
+@freezer.register_generator
+def report():
+    for p in metadata_dict.keys():
+        yield {'team': p}
+
 
 
 if __name__ == '__main__':
