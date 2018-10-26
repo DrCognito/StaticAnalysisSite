@@ -312,6 +312,12 @@ def team():
     for p in metadata_dict.keys():
         yield {'team': p}
 
+@freezer.register_generator
+def report():
+    for p in metadata_dict.keys():
+        yield {'team': p}
+
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'build':
