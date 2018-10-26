@@ -1,0 +1,100 @@
+{% extends "team.j2" %}
+{% block vis %}
+<h2>Replays</h2>
+{% if replays is not none %}
+    <table>
+        <td>Dire</td><td>Radiant</td>
+        {% for r_pair in replays %}
+            {% set left = '' if r_pair[0] is none else r_pair[0] %}
+            {% set right = '' if r_pair[1] is none else r_pair[1] %}
+            <tr>
+            <td align='right'>{{left}}</td>
+            <td align='right'>{{right}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if winrates is not none %}
+<h2>Win Rates</h2>
+{{winrates}}
+{% endif %}
+<h1 id="dire">Dire</h1><br>
+<h2 id="dire_draft">Drafts</h2><br>
+{% if dire["plot_drafts"] is not none %}
+    <img class='img-fit' src={{dire["plot_drafts"]}}>
+{% endif %}
+<h2 id="dire_wards">Wards</h2><br>
+{% if dire['ward_plots'] is not none %}
+    {% for plot in dire['ward_plots'] %}
+        <h2>{{dire['ward_title'][loop.index - 1]}}</h2><br>
+        <img src={{url_for('static', filename=plot)}}><br>
+    {% endfor %}
+{% endif %}
+<h2 id="dire_pos">Player Positions</h2><br>
+{% if dire['pos_plots'] is not none %}
+    {% for plot in dire['pos_plots'] %}
+        <h2>{{dire['pos_names'][loop.index - 1]}}</h2><br>
+        <img src={{url_for('static', filename=plot)}}><br>
+    {% endfor %}
+{% endif %}
+<h2 id="dire_smoke">Smokes</h2><br>
+{% if dire["smoke"] is not none %}
+    <img src={{dire["smoke"]}}>
+{% endif %}
+<h2 id="dire_scan">Scans</h2><br>
+{% if dire["scan"] is not none %}
+    <img src={{dire["scan"]}}>
+{% endif %}
+<h1 id="radiant">Radiant</h1><br>
+<h2 id="radiant_draft">Drafts</h2><br>
+{% if radiant["plot_drafts"] is not none %}
+    <img class='img-fit' src={{radiant["plot_drafts"]}}>
+{% endif %}
+<h2 id="radiant_wards">Wards</h2><br>
+{% if radiant['ward_plots'] is not none %}
+    {% for plot in radiant['ward_plots'] %}
+        <h2>{{radiant['ward_title'][loop.index - 1]}}</h2><br>
+        <img src={{url_for('static', filename=plot)}}><br>
+    {% endfor %}
+{% endif %}
+<h2 id="radiant_player">Player Positions</h2><br>
+{% if radiant['pos_plots'] is not none %}
+    {% for plot in radiant['pos_plots'] %}
+        <h2>{{radiant['pos_names'][loop.index - 1]}}</h2><br>
+        <img src={{url_for('static', filename=plot)}}><br>
+    {% endfor %}
+{% endif %}
+<h2 id="radiant_smoke">Smokes</h2><br>
+{% if radiant["smoke"] is not none %}
+    <img src={{radiant["smoke"]}}>
+{% endif %}
+<h2 id="radiant_scan">Scans</h2><br>
+{% if radiant["scan"] is not none %}
+    <img src={{radiant["scan"]}}>
+{% endif %}
+{% if summary["draft_summary"] is not none %}
+    <h2>Draft Summary<h2><br>
+    <img class='img-fit' src={{summary["draft_summary"]}}><br>
+{% endif %}
+{% if summary["hero_picks"] is not none %}
+    <h2>Hero Picks<h2><br>
+    <img class='img-fit' src={{summary["hero_picks"]}}><br>
+{% endif %}
+<h1 id="summary">Summary</h1><br>
+{% if summary["pair_picks"] is not none %}
+    <h2>Pair Pick Rate<h2><br>
+    <img class='img-fit' src={{summary["pair_picks"]}}><br>
+{% endif %}
+{% if summary["pick_contexts"] is not none %}
+    <h2>Top Pick Context<h2><br>
+    <img class='img-fit' src={{summary["pick_context"]}}><br>
+{% endif %}
+{% if summary["win_rate"] is not none %}
+    <h2>Win Rates<h2><br>
+    <img class='img-fit' src={{summary["win_rate"]}}><br>
+{% endif %}
+{% if summary["rune"] is not none %}
+    <h2>Rune Control<h2><br>
+    <img class='img-fit' src={{summary["rune"]}}><br>
+{% endif %}
+{% endblock vis %}
