@@ -296,7 +296,6 @@ def report(team, dataset='default'):
             radiant["scan"] = url_path(data["plot_scan_radiant"])
 
     summary = get_team_summary(team)
-    print(summary)
 
     return render_template('plots/report.j2',
                            navigators=navigators,
