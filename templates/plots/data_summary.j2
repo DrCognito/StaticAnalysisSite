@@ -1,0 +1,12 @@
+{% extends "team.j2" %}
+{% block vis %}
+<h1 id="wards">Ward Win Rate</h2><br>
+{% if plots['wards_dire'] is not none %}
+    <h2>Dire</h2>
+    <img src={{url_for('static', filename=plots['wards_dire'])}}><br>
+{% endif %}
+{% if plots['wards_radiant'] is not none %}
+    <h2>Radiant</h2>
+    <img src={{url_for('static', filename=plots['wards_radiant'])}}><br>
+{% endif %}
+{% endblock vis %}

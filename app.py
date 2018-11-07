@@ -27,6 +27,7 @@ def get_metadata_locations(path: Path) -> dict:
 
 
 metadata_dict = get_metadata_locations(Path(environ['PLOT_DIRECTORY']))
+data_summary_dir = Path(environ['DATA_SUMMARY_DIRECTORY'])
 
 
 def url_path(path_in: str, endpoint='static'):
@@ -184,6 +185,8 @@ def index():
     for team in metadata_dict:
         url = url_for("team", team=team)
         navigators.append((team, url))
+    navigators.append((None, None))
+    navigators.append(("Summaries", url_for("data_summary")))
     return render_template('index.j2',
                            navigators=navigators)
 
@@ -224,6 +227,29 @@ def summary(team):
                            navigators=navigators,
                            summary=summary,
                            team=team)
+
+
+@app.route("/data_summary.html")
+def data_summary():
+    navigators = []
+    for team in metadata_dict:
+        url = url_for("team", team=team)
+        navigators.append((team, url))
+    navigators.append((None, None))
+    navigators.append(("Summaries", url_for("data_summary")))
+    # Wards
+    plots = {}
+    dire_wards = data_summary_dir / "wards_dire.png"
+    radiant_wards = data_summary_dir / "wards_radiant.png"
+
+    if dire_wards.is_file():
+        plots["wards_dire"] = "data_summary/wards_dire.png"
+    if radiant_wards.is_file():
+        plots["wards_radiant"] = "data_summary/wards_radiant.png"
+
+    return render_template('plots/data_summary.j2',
+                           navigators=navigators,
+                           plots=plots)
 
 
 @app.route("/<string:team>/<string:side>/<string:plot>.html")
